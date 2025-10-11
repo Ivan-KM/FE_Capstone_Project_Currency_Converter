@@ -4,10 +4,33 @@ import ConverterForm from "./components/ConverterForm";
 function App() {
     const [conversionData, setConversionData] = useState(null);
 
-    const handleConvert = (amount, fromCurrency, toCurrency) => {
-    console.log(`Convert ${amount} ${fromCurrency} to ${toCurrency}`);
-    // We’ll connect this to a real API in Step 3
-    setConversionData({ amount, fromCurrency, toCurrency });
+    const handleConvert = async (amount, fromCurrency, toCurrency) => {
+    try {
+        const response = await fetch(
+        `https://v6.exchangerate-api.com/v6/7bc990b692327193abab3bc7/latest/${fromCurrency}`
+        );
+        const data = await response.json();
+    
+        if (data.result !== "success") {
+        alert("Error fetching exchange rates. Try again later.");
+        return;
+        }
+
+        const rate = data.conversion_rates[toCurrency];
+      const convertedAmount = (amount * rate).toFixed(2);
+
+        setConversionData({
+        amount,
+        fromCurrency,
+        toCurrency,
+        convertedAmount,
+        rate,
+        lastUpdated: data.time_last_update_utc,
+        });
+    } catch (error) {
+        console.error(error);
+        alert("Network error. Please try again.");
+    }
     };
 
     return (
@@ -19,13 +42,19 @@ function App() {
         <ConverterForm onConvert={handleConvert} />
 
         {conversionData && (
-        <div className="mt-6 text-gray-700">
-            <p>
-            Amount: <strong>{conversionData.amount}</strong>
+        <div className="mt-6 p-4 bg-green-100 rounded-lg max-w-md w-full text-center mx-auto">
+            <p className="text-lg font-semibold">
+            {conversionData.amount} {conversionData.fromCurrency} ={" "}
+            <span className="text-blue-600">
+                {conversionData.convertedAmount} {conversionData.toCurrency}
+            </span>
             </p>
-            <p>
-            From: <strong>{conversionData.fromCurrency}</strong> → To:{" "}
-            <strong>{conversionData.toCurrency}</strong>
+            <p className="text-sm text-gray-600">
+            1 {conversionData.fromCurrency} = {conversionData.rate}{" "}
+            {conversionData.toCurrency}
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+            Last updated: {conversionData.lastUpdated}
             </p>
         </div>
         )}
