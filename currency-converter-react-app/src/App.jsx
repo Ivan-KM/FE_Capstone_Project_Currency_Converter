@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ConverterForm from "./components/ConverterForm";
+import ResultDisplay from "./components/ResultDisplay";
 
 function App() {
     const [conversionData, setConversionData] = useState(null);
@@ -35,9 +36,12 @@ function App() {
 
     return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-        <h1 className="text-3xl font-bold text-blue-600 mb-6">
+        <h1 className="text-3xl font-bold text-brandBlue mb-6">
         Currency Converter
         </h1>
+        <p className="text-gray-600 mb-8 text-center">
+        Check live rates, set rate alerts, receive notifications and more.
+        </p>
 
         <ConverterForm onConvert={handleConvert} />
 

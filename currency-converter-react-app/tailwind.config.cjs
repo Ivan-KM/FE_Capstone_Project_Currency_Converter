@@ -6,3 +6,13 @@ module.exports = {
     },
     plugins: [],
 };
+// Text color: text-blue-600
+export default {
+  theme: {
+    extend: {
+      colors: {
+        brandBlue: "rgb(31, 35, 95)",
+      },
+    },
+  },
+};
