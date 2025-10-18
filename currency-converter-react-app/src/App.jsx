@@ -1,69 +1,27 @@
-import { useState } from "react";
-import ConverterForm from "./components/ConverterForm";
-import ResultDisplay from "./components/ResultDisplay";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
-function App() {
-    const [conversionData, setConversionData] = useState(null);
 
-    const handleConvert = async (amount, fromCurrency, toCurrency) => {
-    try {
-        const response = await fetch(
-        `https://v6.exchangerate-api.com/v6/7bc990b692327193abab3bc7/latest/${fromCurrency}`
-        );
-        const data = await response.json();
-    
-        if (data.result !== "success") {
-        alert("Error fetching exchange rates. Try again later.");
-        return;
-        }
-
-        const rate = data.conversion_rates[toCurrency];
-      const convertedAmount = (amount * rate).toFixed(2);
-
-        setConversionData({
-        amount,
-        fromCurrency,
-        toCurrency,
-        convertedAmount,
-        rate,
-        lastUpdated: data.time_last_update_utc,
-        });
-    } catch (error) {
-        console.error(error);
-        alert("Network error. Please try again.");
-    }
-    };
-
+export default function App() {
     return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-        <h1 className="text-3xl font-bold text-brandBlue mb-6">
-        Currency Converter
-        </h1>
-        <p className="text-gray-600 mb-8 text-center">
-        Check live rates, set rate alerts, receive notifications and more.
-        </p>
-
-        <ConverterForm onConvert={handleConvert} />
-
-        {conversionData && (
-        <div className="mt-6 p-4 bg-green-100 rounded-lg max-w-md w-full text-center mx-auto">
-            <p className="text-lg font-semibold">
-            {conversionData.amount} {conversionData.fromCurrency} ={" "}
-            <span className="text-blue-600">
-                {conversionData.convertedAmount} {conversionData.toCurrency}
-            </span>
-            </p>
-            <p className="text-sm text-gray-600">
-            1 {conversionData.fromCurrency} = {conversionData.rate}{" "}
-            {conversionData.toCurrency}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-            Last updated: {conversionData.lastUpdated}
-            </p>
+    <Router>
+        <div className="flex flex-col min-h-screen bg-gray-50">
+        <Navbar />
+        <main className="flex-grow">
+            <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            </Routes>
+        </main>
+        <Footer />
         </div>
-        )}
-    </div>
+    </Router>
     );
 }
-
-export default App;
