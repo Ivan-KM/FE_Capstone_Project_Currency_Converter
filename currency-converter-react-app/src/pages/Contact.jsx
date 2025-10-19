@@ -21,7 +21,7 @@ import { useState } from "react";
         <div
         className="min-h-screen flex items-center justify-center bg-[#091261] p-6"
         >
-      <div className="w-full max-w-md space-y-6"> {/* limits form width */}
+      <div className="w-centered max-w-md space-y-6"> {/* limits form width */}
         <h1
             className="text-3xl sm:text-4xl font-bold text-center"
             style={{ color: "#FFD700" }}
@@ -29,7 +29,7 @@ import { useState } from "react";
             Contact KIMX Services
         </h1>
 
-        <p className="text-gray-200 text-center">
+        <p className="text-center" style={{ color: "#FFD700" }}>
             Have questions about currency conversions, KIMX services, or feedback about
             the app? We’d love to hear from you!
         </p>
@@ -70,7 +70,7 @@ import { useState } from "react";
 
             <button
                 type="submit"
-                className="w-full py-3 rounded-lg font-semibold hover:bg-yellow-400 transition"
+                className="w-middle py-3 rounded-lg font-semibold hover:bg-yellow-400 transition"
                 style={{ backgroundColor: "#FFD700", color: "#091261" }}
             >
                 Send Message

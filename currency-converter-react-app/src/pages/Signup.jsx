@@ -1,24 +1,25 @@
     import { useState } from "react";
-    import { Link, useNavigate } from "react-router-dom";
+    import { useNavigate } from "react-router-dom";
 
-    export default function Login() {
+    export default function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleSignup = (e) => {
         e.preventDefault();
 
-        if (email === "user@example.com" && password === "password123") {
-        setMessage("✅ Login successful! Redirecting to Home...");
+        // Example signup logic
+        if (email && password) {
+        setMessage("✅ Signup successful! Redirecting to Home...");
 
-        // Redirect to Home after 2 seconds
+        // Redirect after 2 seconds
         setTimeout(() => {
-            navigate("/");
+            navigate("/"); // navigate to home page
         }, 2000);
         } else {
-        setMessage("❌ Invalid email or password. Try again.");
+        setMessage("❌ Please fill all fields.");
         }
     };
 
@@ -27,17 +28,15 @@
         className="flex flex-col items-center justify-center min-h-[80vh] px-4 py-8"
         style={{ backgroundColor: "#091261" }}
         >
-        {/* Heading */}
         <h1
             className="text-3xl sm:text-4xl font-bold mb-6 text-center"
             style={{ color: "#FFD700" }}
         >
-            Login to KIMX
+            Create an Account
         </h1>
 
-        {/* Login Form */}
         <form
-            onSubmit={handleLogin}
+            onSubmit={handleSignup}
             className="bg-white p-6 rounded-2xl shadow-lg w-80 sm:w-96 space-y-4"
         >
             <input
@@ -60,25 +59,11 @@
             type="submit"
             className="w-full bg-green-600 font-bold py-5 rounded-full text-lg hover:bg-green-700 transition"
             >
-            <span style={{ color: "#FFD700" }}>Login</span>
+            <span style={{ color: "#FFD700" }}>Sign Up</span>
             </button>
-
-            {/* Sign Up option in yellow */}
-            <p
-            className="text-center mt-2 text-sm"
-            style={{ color: "#FFD700" }}
-            >
-            Don't have an account?{" "}
-            <Link
-                to="/signup"
-                className="font-bold hover:text-yellow-300 transition"
-            >
-                Sign Up
-            </Link>
-            </p>
         </form>
 
-        {/* Login message in yellow */}
+        {/* Signup message */}
         {message && (
             <p
             className="mt-4 text-center text-sm sm:text-base font-bold"

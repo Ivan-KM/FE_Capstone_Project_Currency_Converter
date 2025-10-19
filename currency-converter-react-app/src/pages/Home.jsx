@@ -78,7 +78,7 @@ export default function Home() {
       {/* Description */}
         <p
         className="text-lg sm:text-xl text-center max-w-md"
-        style={{ color: "#E0E0E0" }} // light gray
+        style={{ color: "#FFD700" }} // light gray
         >
         Convert between global currencies in real time using live exchange rates.
         </p>
