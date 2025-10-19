@@ -10,15 +10,23 @@
     const handleLogin = (e) => {
         e.preventDefault();
 
-        if (email === "user@example.com" && password === "password123") {
-        setMessage("✅ Login successful! Redirecting to Home...");
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // valid email format
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; 
+        // Minimum 8 characters, at least 1 letter and 1 number
 
-        // Redirect to Home after 2 seconds
-        setTimeout(() => {
-            navigate("/");
-        }, 2000);
+        if (!email || !password) {
+        setMessage("❌ Please enter email and password.");
+        } else if (!emailPattern.test(email)) {
+        setMessage("❌ Please enter a valid email address.");
+        } else if (!passwordPattern.test(password)) {
+        setMessage(
+            "❌ Password must be at least 8 characters long and contain at least one letter and one number."
+        );
         } else {
-        setMessage("❌ Invalid email or password. Try again.");
+        setMessage("✅ Login successful! Redirecting to Home...");
+        setTimeout(() => {
+            navigate("/home");
+        }, 2000);
         }
     };
 
@@ -27,7 +35,6 @@
         className="flex flex-col items-center justify-center min-h-[80vh] px-4 py-8"
         style={{ backgroundColor: "#091261" }}
         >
-        {/* Heading */}
         <h1
             className="text-3xl sm:text-4xl font-bold mb-6 text-center"
             style={{ color: "#FFD700" }}
@@ -35,7 +42,6 @@
             Login to KIMX
         </h1>
 
-        {/* Login Form */}
         <form
             onSubmit={handleLogin}
             className="bg-white p-6 rounded-2xl shadow-lg w-80 sm:w-96 space-y-4"
@@ -47,6 +53,7 @@
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#091261] transition"
+            pattern="[^\s@]+@[^\s@]+\.[^\s@]+" 
             />
             <input
             type="password"
@@ -63,7 +70,6 @@
             <span style={{ color: "#FFD700" }}>Login</span>
             </button>
 
-            {/* Sign Up option in yellow */}
             <p
             className="text-center mt-2 text-sm"
             style={{ color: "#FFD700" }}
@@ -78,7 +84,6 @@
             </p>
         </form>
 
-        {/* Login message in yellow */}
         {message && (
             <p
             className="mt-4 text-center text-sm sm:text-base font-bold"

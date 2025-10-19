@@ -10,16 +10,25 @@
     const handleSignup = (e) => {
         e.preventDefault();
 
-        // Example signup logic
-        if (email && password) {
+        // Email must be valid format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Password: min 8 chars, at least 1 letter and 1 number
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+        if (!email || !password) {
+        setMessage("❌ Please fill all fields.");
+        } else if (!emailPattern.test(email)) {
+        setMessage("❌ Please enter a valid email address.");
+        } else if (!passwordPattern.test(password)) {
+        setMessage(
+            "❌ Password must be at least 8 characters long and contain at least one letter and one number."
+        );
+        } else {
         setMessage("✅ Signup successful! Redirecting to Home...");
 
-        // Redirect after 2 seconds
         setTimeout(() => {
-            navigate("/"); // navigate to home page
+            navigate("/home"); // navigate to home page
         }, 2000);
-        } else {
-        setMessage("❌ Please fill all fields.");
         }
     };
 
@@ -46,6 +55,7 @@
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#091261] transition"
+            pattern="[^\s@]+@[^\s@]+\.[^\s@]+" // optional HTML-level validation
             />
             <input
             type="password"
